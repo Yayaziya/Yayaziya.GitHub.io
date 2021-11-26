@@ -498,6 +498,7 @@
 <li><p>新建一个名为用户名+.github.io的仓库</p>
 </li>
 <li><p>创建成功后，点击setting，找到Github Pages，选择一个主题，之后，你的博客页面（https://用户名.github.io/）就创建成功</p>
+<p><img src="/hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/1.png"></p>
 </li>
 </ul>
 <h3 id="5-hexo安装"><a href="#5-hexo安装" class="headerlink" title="5.hexo安装"></a>5.hexo安装</h3><ul>
@@ -515,8 +516,10 @@
 </li>
 <li><p> 打开浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 即可看到初始页面</p>
 </li>
-<li><p>ctrl+c 关闭本地服务器</p>
-</li>
+</ul>
+<p>  <img src="/hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/8-16376690935336.jpg"></p>
+<ul>
+<li>ctrl+c 关闭本地服务器</li>
 </ul>
 <h3 id="6-连接Github与本地"><a href="#6-连接Github与本地" class="headerlink" title="6.连接Github与本地"></a>6.连接Github与本地</h3><p>打开git bash，然后输入以下命令：</p>
 <ul>
@@ -540,6 +543,7 @@
 <p>操作如下：</p>
 <ul>
 <li><p>命令：ssh-keygen -t rsa -C 你的github邮件地址 ，回车后再三次回车，成功后会生成  /user/用户/.ssh  文件。</p>
+<p><img src="/hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/2-16376690444965.png"></p>
 </li>
 <li><p>打开github，进入个人设置 &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key，名字随意，将.ssh文件夹下的id_rsa.pub文件中的内容复制粘贴进去，保存即可，我们的公钥就添加成功了。</p>
 </li>
@@ -550,10 +554,15 @@
 <li><a target="_blank" rel="noopener" href="https://hexo.io/themes/">打开这个网页</a>，选择你喜欢的主题，然后点击主题名，即可跳转至github上。</li>
 </ul>
 <h3 id="2-下载主题"><a href="#2-下载主题" class="headerlink" title="2.下载主题"></a>2.下载主题</h3><ul>
-<li>进入hexo安装创建的目录，右键点击Git Bash Here。</li>
-<li>输入命令&gt;&gt;git clone <a target="_blank" rel="noopener" href="https://github.com/blinkfox/hexo-theme-matery.git">https://github.com/blinkfox/hexo-theme-matery.git</a>  themes/主题名称 </li>
-<li>注意：<strong>第二步命令中https这个链接是你自己的主题链接</strong></li>
-<li>命令执行成功后当前目录下会生成一个theme文件，这个文件下存放博客主题</li>
+<li><p>进入hexo安装创建的目录，右键点击Git Bash Here。</p>
+</li>
+<li><p>输入命令&gt;&gt;git clone <a target="_blank" rel="noopener" href="https://github.com/blinkfox/hexo-theme-matery.git">https://github.com/blinkfox/hexo-theme-matery.git</a>  themes/主题名称 </p>
+</li>
+<li><p>注意：<strong>第二步命令中https这个链接是你自己的主题链接</strong></p>
+</li>
+<li><p>命令执行成功后当前目录下会生成一个theme文件，这个文件下存放博客主题</p>
+<p><img src="/hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/4.png"></p>
+</li>
 </ul>
 <h3 id="3-使用主题"><a href="#3-使用主题" class="headerlink" title="3.使用主题"></a>3.使用主题</h3><ul>
 <li>在hexokinase根目录下找到_config.yml文件，在里面找到theme: landscape改为theme: 你的主题名称  </li>
@@ -581,6 +590,9 @@
 <li><p>hexo中插入图片请看这个<a target="_blank" rel="noopener" href="https://juejin.cn/post/6882619951857811469">文档</a></p>
 </li>
 <li><p>根目录下右键打开git bash，输入hexo g生成，输入hexo s本地预览，成功后输入hexo d推送</p>
+<p><strong>参考链接：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv12633102">https://www.bilibili.com/read/cv12633102</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35668237">https://zhuanlan.zhihu.com/p/35668237</a></p>
 </li>
 </ul>
 
