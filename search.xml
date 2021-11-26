@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Git报错--errno 10054 报错解决</title>
+      <link href="/2021/11/26/Git%E6%8A%A5%E9%94%99-errno-10054-%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/"/>
+      <url>/2021/11/26/Git%E6%8A%A5%E9%94%99-errno-10054-%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><strong>打开Git命令页面，执行git命令脚本：修改设置，解除ssl验证</strong></p><p><code>git config --global http.sslVerify "false"</code></p><p>之后，再次输入<code>hexo d</code>即可`</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo+Github搭建个人博客</title>
       <link href="/2021/11/21/hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
       <url>/2021/11/21/hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
