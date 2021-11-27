@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>UPX壳及使用OllyDbg脱壳</title>
+      <link href="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/"/>
+      <url>/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="UPX壳"><a href="#UPX壳" class="headerlink" title="UPX壳"></a>UPX壳</h2><p>壳一般分为两类，一类是加密壳，一类是压缩壳。UPX壳属于是压缩壳。</p><p>UPX压缩原理就是将程序压缩，并在原先的程序之前再加入一段代码。将压缩后的代码执行时，加入的代码将原先的代码加载到内存中，并在加入代码执行完后跳转至原先代码的OEP（程序入口处）</p><h2 id="UPX脱壳步骤"><a href="#UPX脱壳步骤" class="headerlink" title="UPX脱壳步骤"></a>UPX脱壳步骤</h2><p>工具：OllyDbg，插件Ollydump，PEiD</p><p>1.寻找原始OEP</p><p>最简单的手动查找OEP就是寻找尾部跳转指令，这条指令就是插入代码的最后一条指令跳转至OEP。通常情况下它是jmp指令。通常尾部跳转指令是一串无效指令前的有效指令的最后一条指令。OD打开加壳后的程序我们可以看到：</p><p><img src="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/1638025945.png"></p><p>找到OEP后我们在尾部跳转指令处下断点，F9运行至断点处，F7进入OEP</p><p>2.dump内存到文件（将内存中的数据或代码转储至本地）</p><p>点击插件&gt;&gt;插件Ollydump&gt;&gt;Dump process&gt;&gt;Dump</p><p>注意：将Entry Point 改为OEP地址</p><p><img src="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/1638026860(1).png"></p><p>3.可用PEiD查看是否已脱壳</p><p><img src="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/1638027157(1).png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 壳 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>加壳与脱壳</title>
+      <link href="/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/"/>
+      <url>/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/</url>
+      
+        <content type="html"><![CDATA[<h1 id="加壳与脱壳"><a href="#加壳与脱壳" class="headerlink" title="加壳与脱壳"></a>加壳与脱壳</h1><h2 id="一、加壳"><a href="#一、加壳" class="headerlink" title="一、加壳"></a>一、加壳</h2><p>打包程序，也称为加壳器。所有的加壳器是将一个可执行文件输入，再输出一个新的可执行文件。被加壳的可执行文件经过压缩、加密或者其他转换，目的是使他们难以识别，难以被逆向工程分析。</p><h2 id="二、脱壳存根"><a href="#二、脱壳存根" class="headerlink" title="二、脱壳存根"></a>二、脱壳存根</h2><p>未加壳的可执行程序是由操作系统加载，而加壳后的可执行程序是脱壳存根在操作系统中加载，它负责加载原始程序。</p><h2 id="脱壳过程"><a href="#脱壳过程" class="headerlink" title="脱壳过程"></a>脱壳过程</h2><p><img src="/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/1638002764.jpg"></p><h2 id="识别加壳程序"><a href="#识别加壳程序" class="headerlink" title="识别加壳程序"></a>识别加壳程序</h2><h3 id="加壳程序的标识"><a href="#加壳程序的标识" class="headerlink" title="加壳程序的标识"></a>加壳程序的标识</h3><ul><li>程序中的导入函数很少，如果导入函数只有LoadLibrary和GetProcAddress时要更加注意。</li><li>使用IDA打开程序，自动分析只有少量代码被识别。</li><li>使用OllyDbg打开程序，会有程序可能被加壳的警告。</li><li>程序的节名中包含某种加壳器的标识，如UPX0</li><li>程序拥有不正常的节大小</li><li>加壳探测工具，如PEiD</li></ul><h2 id="脱壳选项"><a href="#脱壳选项" class="headerlink" title="脱壳选项"></a>脱壳选项</h2><p>脱壳有三种选项：自动静态脱壳，自动动态脱壳和手动动态脱壳</p><h3 id="1-自动脱壳"><a href="#1-自动脱壳" class="headerlink" title="1.自动脱壳"></a>1.自动脱壳</h3><p>自动静态脱壳程序解压缩或者解密一个可执行程序。自动静态脱壳仅仅针对的是某个壳，对于那种阻碍分析的壳是无用的。</p><p>PE Explorer是一个针对Exe和Dll文件免费的程序，它提供一些默认安装的脱壳插件。</p><p>自动的动态脱壳程序运行可执行文件，所以需要在安全的环境下运行。它让脱壳存根脱出原始的可执行文件。一旦原始的可执行文件被脱壳，它将被写入硬盘，然后脱壳程序重构导入表。</p><h3 id="2-手动脱壳"><a href="#2-手动脱壳" class="headerlink" title="2.手动脱壳"></a>2.手动脱壳</h3><p>有两种手动脱壳的方法：</p><ul><li>找到加壳的算法，然后编写一个程序逆向运行它。</li><li>运行脱壳程序，让脱壳存根帮你，从内存中转储出进程，手动修改PE头部，保持程序的完整。</li></ul><h2 id="常见壳的技巧和窍门"><a href="#常见壳的技巧和窍门" class="headerlink" title="常见壳的技巧和窍门"></a>常见壳的技巧和窍门</h2><h3 id="1-UPX"><a href="#1-UPX" class="headerlink" title="1.UPX"></a>1.UPX</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 壳 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo博客中图片插入及插入失败解决方案</title>
       <link href="/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
       <url>/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>

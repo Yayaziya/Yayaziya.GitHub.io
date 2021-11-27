@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="hexo博客中图片插入及插入失败解决方案, Yayaziya">
-    <meta name="description" content="hexo博客图片插入失败解决方案">
+    <meta name="keywords" content="加壳与脱壳, Yayaziya">
+    <meta name="description" content="加壳与脱壳">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>hexo博客中图片插入及插入失败解决方案 | Yayaziya</title>
+    <title>加壳与脱壳 | Yayaziya</title>
     <link rel="icon" type="image/jpeg" href="/7.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">hexo博客中图片插入及插入失败解决方案</h1>
+                    <h1 class="description center-align post-title">加壳与脱壳</h1>
                 </div>
             </div>
         </div>
@@ -432,14 +432,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
-                                <span class="chip bg-color">问题解决</span>
+                            <a href="/tags/%E9%80%86%E5%90%91/">
+                                <span class="chip bg-color">逆向</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A3%B3/">
+                                <span class="chip bg-color">壳</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%80%86%E5%90%91/" class="post-category">
+                                逆向
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -448,7 +461,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-26
+                    2021-11-27
                 </div>
                 
 
@@ -472,7 +485,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="加壳与脱壳"><a href="#加壳与脱壳" class="headerlink" title="加壳与脱壳"></a>加壳与脱壳</h1><h2 id="一、加壳"><a href="#一、加壳" class="headerlink" title="一、加壳"></a>一、加壳</h2><p>打包程序，也称为加壳器。所有的加壳器是将一个可执行文件输入，再输出一个新的可执行文件。被加壳的可执行文件经过压缩、加密或者其他转换，目的是使他们难以识别，难以被逆向工程分析。</p>
+<h2 id="二、脱壳存根"><a href="#二、脱壳存根" class="headerlink" title="二、脱壳存根"></a>二、脱壳存根</h2><p>未加壳的可执行程序是由操作系统加载，而加壳后的可执行程序是脱壳存根在操作系统中加载，它负责加载原始程序。</p>
+<h2 id="脱壳过程"><a href="#脱壳过程" class="headerlink" title="脱壳过程"></a>脱壳过程</h2><p><img src="/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/1638002764.jpg"></p>
+<h2 id="识别加壳程序"><a href="#识别加壳程序" class="headerlink" title="识别加壳程序"></a>识别加壳程序</h2><h3 id="加壳程序的标识"><a href="#加壳程序的标识" class="headerlink" title="加壳程序的标识"></a>加壳程序的标识</h3><ul>
+<li>程序中的导入函数很少，如果导入函数只有LoadLibrary和GetProcAddress时要更加注意。</li>
+<li>使用IDA打开程序，自动分析只有少量代码被识别。</li>
+<li>使用OllyDbg打开程序，会有程序可能被加壳的警告。</li>
+<li>程序的节名中包含某种加壳器的标识，如UPX0</li>
+<li>程序拥有不正常的节大小</li>
+<li>加壳探测工具，如PEiD</li>
+</ul>
+<h2 id="脱壳选项"><a href="#脱壳选项" class="headerlink" title="脱壳选项"></a>脱壳选项</h2><p>脱壳有三种选项：自动静态脱壳，自动动态脱壳和手动动态脱壳</p>
+<h3 id="1-自动脱壳"><a href="#1-自动脱壳" class="headerlink" title="1.自动脱壳"></a>1.自动脱壳</h3><p>自动静态脱壳程序解压缩或者解密一个可执行程序。自动静态脱壳仅仅针对的是某个壳，对于那种阻碍分析的壳是无用的。</p>
+<p>PE Explorer是一个针对Exe和Dll文件免费的程序，它提供一些默认安装的脱壳插件。</p>
+<p>自动的动态脱壳程序运行可执行文件，所以需要在安全的环境下运行。它让脱壳存根脱出原始的可执行文件。一旦原始的可执行文件被脱壳，它将被写入硬盘，然后脱壳程序重构导入表。</p>
+<h3 id="2-手动脱壳"><a href="#2-手动脱壳" class="headerlink" title="2.手动脱壳"></a>2.手动脱壳</h3><p>有两种手动脱壳的方法：</p>
+<ul>
+<li>找到加壳的算法，然后编写一个程序逆向运行它。</li>
+<li>运行脱壳程序，让脱壳存根帮你，从内存中转储出进程，手动修改PE头部，保持程序的完整。</li>
+</ul>
+<h2 id="常见壳的技巧和窍门"><a href="#常见壳的技巧和窍门" class="headerlink" title="常见壳的技巧和窍门"></a>常见壳的技巧和窍门</h2><h3 id="1-UPX"><a href="#1-UPX" class="headerlink" title="1.UPX"></a>1.UPX</h3>
                 
             </div>
             <hr/>
@@ -498,7 +531,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://yayaziya.github.io/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">https://yayaziya.github.io/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</a>
+                    <a href="https://yayaziya.github.io/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/">https://yayaziya.github.io/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -536,8 +569,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
-                                    <span class="chip bg-color">问题解决</span>
+                                <a href="/tags/%E9%80%86%E5%90%91/">
+                                    <span class="chip bg-color">逆向</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A3%B3/">
+                                    <span class="chip bg-color">壳</span>
                                 </a>
                             
                         </div>
@@ -587,19 +624,19 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/">
+                <a href="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="加壳与脱壳">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="UPX壳及使用OllyDbg脱壳">
                         
-                        <span class="card-title">加壳与脱壳</span>
+                        <span class="card-title">UPX壳及使用OllyDbg脱壳</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            加壳与脱壳
+                            upx壳和脱壳
                         
                     </div>
                     <div class="publish-info">
@@ -640,19 +677,19 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/26/Git%E6%8A%A5%E9%94%99-errno-10054-%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/">
+                <a href="/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Git报错--errno 10054 报错解决">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="hexo博客中图片插入及插入失败解决方案">
                         
-                        <span class="card-title">Git报错--errno 10054 报错解决</span>
+                        <span class="card-title">hexo博客中图片插入及插入失败解决方案</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            关于Git报错10054解决方案
+                            hexo博客图片插入失败解决方案
                         
                     </div>
                     <div class="publish-info">
@@ -666,6 +703,14 @@
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
+                        <span class="chip bg-color">问题解决</span>
+                    </a>
+                    
                 </div>
                 
             </div>

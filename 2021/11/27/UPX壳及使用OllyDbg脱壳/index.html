@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="hexo博客中图片插入及插入失败解决方案, Yayaziya">
-    <meta name="description" content="hexo博客图片插入失败解决方案">
+    <meta name="keywords" content="UPX壳及使用OllyDbg脱壳, Yayaziya">
+    <meta name="description" content="upx壳和脱壳">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>hexo博客中图片插入及插入失败解决方案 | Yayaziya</title>
+    <title>UPX壳及使用OllyDbg脱壳 | Yayaziya</title>
     <link rel="icon" type="image/jpeg" href="/7.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">hexo博客中图片插入及插入失败解决方案</h1>
+                    <h1 class="description center-align post-title">UPX壳及使用OllyDbg脱壳</h1>
                 </div>
             </div>
         </div>
@@ -432,14 +432,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
-                                <span class="chip bg-color">问题解决</span>
+                            <a href="/tags/%E9%80%86%E5%90%91/">
+                                <span class="chip bg-color">逆向</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A3%B3/">
+                                <span class="chip bg-color">壳</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%80%86%E5%90%91/" class="post-category">
+                                逆向
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -448,7 +461,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-26
+                    2021-11-27
                 </div>
                 
 
@@ -472,7 +485,20 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="UPX壳"><a href="#UPX壳" class="headerlink" title="UPX壳"></a>UPX壳</h2><p>壳一般分为两类，一类是加密壳，一类是压缩壳。UPX壳属于是压缩壳。</p>
+<p>UPX压缩原理就是将程序压缩，并在原先的程序之前再加入一段代码。将压缩后的代码执行时，加入的代码将原先的代码加载到内存中，并在加入代码执行完后跳转至原先代码的OEP（程序入口处）</p>
+<h2 id="UPX脱壳步骤"><a href="#UPX脱壳步骤" class="headerlink" title="UPX脱壳步骤"></a>UPX脱壳步骤</h2><p>工具：OllyDbg，插件Ollydump，PEiD</p>
+<p>1.寻找原始OEP</p>
+<p>最简单的手动查找OEP就是寻找尾部跳转指令，这条指令就是插入代码的最后一条指令跳转至OEP。通常情况下它是jmp指令。通常尾部跳转指令是一串无效指令前的有效指令的最后一条指令。OD打开加壳后的程序我们可以看到：</p>
+<p><img src="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/1638025945.png"></p>
+<p>找到OEP后我们在尾部跳转指令处下断点，F9运行至断点处，F7进入OEP</p>
+<p>2.dump内存到文件（将内存中的数据或代码转储至本地）</p>
+<p>点击插件&gt;&gt;插件Ollydump&gt;&gt;Dump process&gt;&gt;Dump</p>
+<p>注意：将Entry Point 改为OEP地址</p>
+<p><img src="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/1638026860(1).png"></p>
+<p>3.可用PEiD查看是否已脱壳</p>
+<p><img src="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/1638027157(1).png"></p>
+
                 
             </div>
             <hr/>
@@ -498,7 +524,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://yayaziya.github.io/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">https://yayaziya.github.io/2021/11/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E5%A4%B1%E8%B4%A5-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</a>
+                    <a href="https://yayaziya.github.io/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/">https://yayaziya.github.io/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -536,8 +562,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
-                                    <span class="chip bg-color">问题解决</span>
+                                <a href="/tags/%E9%80%86%E5%90%91/">
+                                    <span class="chip bg-color">逆向</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A3%B3/">
+                                    <span class="chip bg-color">壳</span>
                                 </a>
                             
                         </div>
@@ -583,9 +613,64 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="UPX壳及使用OllyDbg脱壳">
+                        
+                        <span class="card-title">UPX壳及使用OllyDbg脱壳</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            upx壳和脱壳
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%80%86%E5%90%91/" class="post-category">
+                                    逆向
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%80%86%E5%90%91/">
+                        <span class="chip bg-color">逆向</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A3%B3/">
+                        <span class="chip bg-color">壳</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/11/27/%E5%8A%A0%E5%A3%B3%E4%B8%8E%E8%84%B1%E5%A3%B3/">
                     <div class="card-image">
@@ -603,9 +688,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -629,43 +714,6 @@
                         <span class="chip bg-color">壳</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/26/Git%E6%8A%A5%E9%94%99-errno-10054-%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Git报错--errno 10054 报错解决">
-                        
-                        <span class="card-title">Git报错--errno 10054 报错解决</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            关于Git报错10054解决方案
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-26
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Yayaziya
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
