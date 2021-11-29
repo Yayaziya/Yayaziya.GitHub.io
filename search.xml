@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>PECompact壳及脱壳</title>
+      <link href="/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/"/>
+      <url>/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="PECompact"><a href="#PECompact" class="headerlink" title="PECompact"></a>PECompact</h2><p>PECompact是一个商业壳，为性能和速度设计。手动脱PECompact壳跟UPX差不多，不过程序会产生几个异常，需要设置OD将异常传回程序。可以通过尾部跳转指令来寻找OEP。</p><p>异常发生时，OD停止运行，你可以使用下列方法，来决定是否将异常转到应用程序处理：</p><ul><li>Shift+F7 将进入异常</li><li>Shift+F8 将跳过异常</li><li>Shift+F9 将运行异常处理</li></ul><p>OD提供异常处理选项，如同所示，不过在分析时其实我们时可以忽视异常的，因为我们的目的并不是异常修复。</p><img src="/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/1638190316(1).jpg" alt="1638190316(1)" style="zoom:67%;"><h2 id="脱壳"><a href="#脱壳" class="headerlink" title="脱壳"></a>脱壳</h2><p>工具：OD，PEiD，Ollydump插件</p><ul><li>用PEid查看样本壳的类型为PECompact</li></ul><p><img src="/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/1638190800(1).jpg"></p><ul><li>OD打开样本–EntryPoint在0x405130处，在此处有个无条件跳转，往下看，0x405138和0x405139处的指令分别是PUSHFD、PUSHAD，这些指令用来保存寄存器和标志，我们可以推测到，代码结束处肯定会有POPAD和POPFD指令。所以我们可以设置一个断点来尝试发现原始OEP。再往下看0x40513A处有个CALL调用，寄存器窗口ESP处值为0019FF50，也就是说栈地址是0019FF50，我们在此处设置一个硬件断点，右键点击Follow In Dump，我们在内存转储窗口可看到0019FF50地址处存储的内容，并在第一个元素处点击BreakPoint&gt;&gt;Memory on Access，运行程序，出现了一个异常，我们再次设置一个断点，点击BreakPoint&gt;&gt;HW ,on Acess&gt;&gt;Dword,启动程序，触发断点，如图所示：</li></ul><img src="/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/1638192882.png" alt="1638192882" style="zoom:67%;"><p>我们可以看到RETN 指令跳转至另一个位置运行，这可能是尾部跳转，我们单步看这个指令会跳转至什么地方。跳转至0x401577处，此处就是OEP处，我们鼠标点击Plugins&gt;&gt;Ollydump&gt;&gt;Dump Process&gt;&gt;Get EIP As EOP&gt;&gt;Dump，将脱壳后的原始可执行文件存储在硬盘上。</p><ul><li><p>PEiD查看是否脱壳</p><p><img src="/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/1638193627(1).png"></p></li></ul><p>我们可以看到脱壳成功</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 壳 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>UPX壳及使用OllyDbg脱壳</title>
       <link href="/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/"/>
       <url>/2021/11/27/UPX%E5%A3%B3%E5%8F%8A%E4%BD%BF%E7%94%A8OllyDbg%E8%84%B1%E5%A3%B3/</url>
