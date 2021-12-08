@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>巴基斯坦APT组织SideCopy针对印度的攻击活动</title>
+      <link href="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/"/>
+      <url>/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>SideCopy APT 来自于巴基斯坦，至少自 2019 年以来一直在运作，主要针对的是南亚国家，尤其是印度和阿富汗。它的名字来自它的感染链，它试图模仿 SideWinder APT 的感染链。据悉，该组织与透明部落（APT36）有相似之处，可能是透明部落的一个细分组织。</p><p>SideCopy APT 使用的诱饵通常是嵌入以下文件之一的存档文件：Lnk、Microsoft Publisher 或特洛伊木马应用程序。</p><p>这个组织经常通过用针对性的诱饵（这些诱饵是专门为特定受害者设计的）对政府或军事官员进行引诱，进而达到他们的目的（窃取敏感信息）。如该次分析的样本<em>NCERT-NCF-LTV-Vislzr-2022.zip</em>，解压缩后文件包含了一个通过扩展名PDF 文件进行混淆的恶意的lnk文件，诱饵是NCERT（印度国家教育研究与培训委员会）提供的名为“践行价值观，基层领导力的价值叙事”课程的课程，如下图所示</p><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208141701647.png" style="zoom:67%;"><h2 id="样本分析"><a href="#样本分析" class="headerlink" title="样本分析"></a>样本分析</h2><h3 id="1-初始感染媒介：lnk文件"><a href="#1-初始感染媒介：lnk文件" class="headerlink" title="1.初始感染媒介：lnk文件"></a>1.初始感染媒介：lnk文件</h3><p>NCERT-NCF-LTV-Vislzr-2022.pdf.lnk这个文件的目标是为获取固定url中的hta文件并通过本地C:\Windows\System32\mshta.exe 运行该css.hta文件。</p><h3 id="2-恶意脚本：css-hta文件"><a href="#2-恶意脚本：css-hta文件" class="headerlink" title="2.恶意脚本：css.hta文件"></a>2.恶意脚本：css.hta文件</h3><ul><li><p>hta文件包含两个经过base64编码的字符串。其中一个是反序列化的.NET模块，名为“hta.dll”。</p></li><li><p>hta文件第一部分是检查.NET的版本并创建一个C://ProgramData//IntelUpdate.js文件，写入以下内容</p><p><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208230736827.png"></p><p>这个脚本执行后会导致受害机2小时后关机，清楚运行mshta.exe 的痕迹。</p></li><li><p>hta文件第二部分调用WorkInProgress类的RealityShow方法，传入参数diva（一段数据）和NCERT-NCF-LTV-Vislzr-2022.pdf（释放文档名称）。</p></li></ul><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208143254123.png" style="zoom:50%;"><h3 id="3-dropper木马hta-dll"><a href="#3-dropper木马hta-dll" class="headerlink" title="3.dropper木马hta.dll"></a>3.dropper木马hta.dll</h3><p>该名为hta.dll的程序是一种下载器木马，经分析，它主要有以下几个方面的功能：</p><ul><li><p>调用函数RealityShow1()，主要功能为从https[:]//vedicwisdom.in/wp-content/uploads/2019/13/hwo/DISCHARGE-DRILL/css/获取hta脚本并运行</p><p><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208152729238.png"></p></li><li><p>调用RealityShow函数先解码和解压缩这个字符串并写入一个PDF文件中，然后打开”NCERT-NCF-LTV-Vislzr-2022.pdf“这个文件。</p><p><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208210234232.png"></p></li><li><p>接着RealityShow会调用getThridStrike函数从https[:]//iiieyehealth.com/fonts/times/files/css/获取hta并用本地mshta.exe运行；从https[:]//iiieyehealth.com/fonts/times/files/js/获取文件并更该文件名为duoApp.txt，将文件中的数据读并写入duoApp1.hta文件，然后运行hta文件。</p><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208153928657.png" style="zoom:67%;"></li></ul><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208154034192.png" style="zoom:67%;"><p>注：由于第三步中对应链接的payload失效，所以接下来的分析是根据带有截图的关于SideCopy分析的文章交叉分析的执行过程</p><h3 id="4-第二个恶意脚本：hta文件"><a href="#4-第二个恶意脚本：hta文件" class="headerlink" title="4.第二个恶意脚本：hta文件"></a>4.第二个恶意脚本：hta文件</h3><p>由第三步知，hta.dll文件运行得到第二阶段的hta文件。这个hta的文件主要功能有：</p><ul><li>通过注册表项检测系统中的.Net框架版本，决定后续释放的木马程序版本。</li><li>将嵌入的所有数据和已安装的防病毒产品信息通过 PinkAgain 函数传递给序列化名为“preBotHta.dll”的 .Net 模块</li></ul><h3 id="5-dropper木马：PreBotHta-dll"><a href="#5-dropper木马：PreBotHta-dll" class="headerlink" title="5.dropper木马：PreBotHta.dll"></a>5.dropper木马：PreBotHta.dll</h3><ul><li><p>  入口函数PinkAgain()会判断当前系统中安装的杀毒软件，然后根据杀毒软件的类型来决定释放文件的方式</p></li><li><p>调用activeDefender函数将 “Credwiz.exe” 从 system32/SysWOW64 文件复制到路径 “C:\ProgramData\文件夹\”，当它加载时会侧加载恶意文件Duser.dll</p></li><li><p>调用CopyExeAsTxt函数，CopyExeAsTxt会解码和解压传递进来的字符串然后在Statrtup目录释放一个名字为winstr.jpg的文件，然后将winstr.jpg重命名为winstr.exe（关于后面RAT的分析见这个<a href="http://blog.nsfocus.net/apt-sidecopy/">文档</a>）。</p><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208213505352.png" style="zoom:67%;"><img src="/2021/12/08/%E5%B7%B4%E5%9F%BA%E6%96%AF%E5%9D%A6APT%E7%BB%84%E7%BB%87SideCopy%E9%92%88%E5%AF%B9%E5%8D%B0%E5%BA%A6%E7%9A%84%E6%94%BB%E5%87%BB%E6%B4%BB%E5%8A%A8/image-20211208223006705.png" style="zoom:67%;"></li></ul><h3 id="6-恶意脚本：duoApp1-hta"><a href="#6-恶意脚本：duoApp1-hta" class="headerlink" title="6.恶意脚本：duoApp1.hta"></a>6.恶意脚本：duoApp1.hta</h3><ul><li><p>跟之前分析的hta文件功能差不多，即内存中释放并执行名为dropper木马，并将包含恶意程序的数据和一段反病毒程序列表字符串传递给该dropper木马。</p></li><li><p>dropper木马的主要功能是通过判断传入的反病毒产品列表，使用对应的方式将传入的数据保存并运行。</p></li><li><p>释放出 DUser.dll，bat批文件, exe文件，将系统文件credwiz.exe拷贝到C:\ProgramData\文件夹\credwiz.exe。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SideCopy APT 主要使用存档文件来针对垃圾邮件或鱼叉式网络钓鱼活动中的受害者。存档文件通常具有嵌入式 lnk、Office 或木马应用程序，用于调用 mshta 下载和执行 hta 文件。 hta 文件执行无文件负载执行以部署与此参与者关联的 RAT ，然后根据RAT从C2获取指令和传递搜集到的信息。</p><p>参考链接：</p><p><a href="http://blog.nsfocus.net/apt-sidecopy/">http://blog.nsfocus.net/apt-sidecopy/</a></p><p><a href="https://blog.malwarebytes.com/threat-intelligence/2021/12/sidecopy-apt-connecting-lures-to-victims-payloads-to-infrastructure/">https://blog.malwarebytes.com/threat-intelligence/2021/12/sidecopy-apt-connecting-lures-to-victims-payloads-to-infrastructure/</a></p><p><a href="https://paper.seebug.org/1721/">https://paper.seebug.org/1721/</a></p><p><a href="https://www.seqrite.com/documents/en/white-papers/Seqrite-WhitePaper-Operation-SideCopy.pdf">https://www.seqrite.com/documents/en/white-papers/Seqrite-WhitePaper-Operation-SideCopy.pdf</a></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 样本分析 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 样本分析 </tag>
+            
+            <tag> APT </tag>
+            
+            <tag> SideCopy </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PECompact壳及脱壳</title>
       <link href="/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/"/>
       <url>/2021/11/29/PECompact%E5%A3%B3%E5%8F%8A%E8%84%B1%E5%A3%B3/</url>
